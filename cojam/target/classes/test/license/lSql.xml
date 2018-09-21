@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="license">
+	
+	<select id="licenseAlldata" resultType="ldto">
+		select * from license order by lc_seq desc
+	</select>
+	
+	<insert id="LcInsert" parameterType="ldto">
+		insert into 
+		license (lc_group, lc_name, lc_content, lc_date,lc_imgname, lc_id) 
+		values (#{lc_group}, #{lc_name}, #{lc_content}, NOW(), #{lc_imgname}, #{lc_id})
+	</insert>
+	
+	<select id="licselectDatas" resultType="ldto" parameterType="HashMap">
+	      select * from license order by lc_seq desc limit #{start},#{end}
+  	</select>
+  
+  	<select id="licgetCount" resultType="int">
+   		select count(*) from license
+  	</select>
+
+</mapper>	

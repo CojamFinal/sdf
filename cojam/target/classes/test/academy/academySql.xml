@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="academy">
+
+	<select id="academyAlldata" resultType="academydto">
+		select * from academy order by academy_seq desc
+	</select>
+	
+	<insert id="academyInsert" parameterType="academydto">
+		insert into academy
+		(academy_geogra, academy_title, academy_id, academy_content,academy_date)
+		values (#{academy_geogra}, #{academy_title}, #{academy_id}, #{academy_content}, NOW())
+	</insert>
+	
+	<select id="acaselectDatas" resultType="academydto" parameterType="HashMap">
+	      select * from academy order by academy_seq desc limit #{start},#{end}
+  	</select>
+  
+  	<select id="acagetCount" resultType="int">
+   		select count(*) from academy
+  	</select>
+	
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="test.license.lDto" alias="lDto"/>
+		<typeAlias type="test.user.UserDto" alias="userdto"/>
+		<typeAlias type="test.lecture.lectureDto" alias="lecturedto"/>
+		<typeAlias type="test.freeboard.freeboardDto" alias="freeboarddto"/>
+		<typeAlias type="test.academy.academyDto" alias="academydto"/>
+		<typeAlias type="test.seminar.SeminarDto" alias="seminardto"/>
+		<typeAlias type="test.sites.SitesDto" alias="sitesdto" />
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="test/license/lSql.xml" />
+		<mapper resource="test/user/UserSql.xml"/>
+		<mapper resource="test/lecture/lectureSql.xml"/>
+		<mapper resource="test/freeboard/freeboardSql.xml"/>
+		<mapper resource="test/academy/academySql.xml"/>
+		<mapper resource="test/seminar/seminarSql.xml"/>
+		<mapper resource="test/sites/sitesSql.xml"/>
+	</mappers>
+	
+</configuration>

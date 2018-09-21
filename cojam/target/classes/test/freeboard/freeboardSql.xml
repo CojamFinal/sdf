@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="freeboard">
+
+	<select id="freeboardAlldata" resultType="freeboarddto">
+		select * from freeboard order by freeboard_seq desc
+	</select>
+	
+	<insert id="freeboardInsert" parameterType="freeboarddto">
+		insert into freeboard
+		(freeboard_title, freeboard_id, freeboard_content, freeboard_date)
+		values (#{freeboard_title}, #{freeboard_id}, #{freeboard_content}, NOW())
+	</insert>
+	
+	<select id="freeboardContent" resultType="freeboarddto" parameterType="int">
+		select * from freeboard where freeboard_seq=#{Seq}
+	</select>
+	
+	<select id="freeboardDelete" resultType="freeboarddto" parameterType="int">
+		delete from freeboard where freeboard_seq=#{Seq}
+	</select>
+	
+
+	<select id="selectDatas" resultType="freeboarddto" parameterType="HashMap">
+	      select * from freeboard order by freeboard_seq desc limit #{start},#{end}
+  	</select>
+  
+  	<select id="freegetCount" resultType="int">
+   		select count(*) from freeboard
+  	</select>
+  	
+  	<select id="getMainList" resultType="freeboarddto">
+  		select * from freeboard order by freeboard_seq desc limit 5
+  	</select>
+	
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="seminar">
+
+	<select id="SelectAll" resultType="seminardto">
+		select * from seminar order by seq desc
+	</select>
+
+	<select id="SelectSearched" parameterType="Hashmap" resultType="seminardto">
+		${sql} order by seq desc limit #{start},#{end}
+	</select>
+	
+	<select id="TotalCounts" resultType="int">
+		select count(*) from seminar
+	</select>
+	
+	<select id="semiselectDatas" resultType="seminardto" parameterType="HashMap">
+	      select * from seminar order by startday desc limit #{start},#{end}
+  	</select>
+  	
+  	<insert id="insertSeminarData" parameterType="seminardto">
+  		insert into seminar values (#{content},#{hashtag},0,#{location},#{startday},#{endday},#{title})
+  	</insert>
+	
+	<select id="getSeminarMainList" resultType="seminardto">
+		select * from seminar order by seq desc limit 5
+	</select>
+	<select id="getViewDatas" parameterType="String" resultType="seminardto">
+		select * from seminar where seq = #{seq}
+	</select>
+	<update id="Update" parameterType="seminardto">
+		update seminar set content=#{content}, hashtag=#{hashtag}, location=#{location}, startday=#{startday}, endday=#{endday}, title=#{title} where seq=#{seq}
+	</update>
+	<delete id="Delete" parameterType="String">
+		delete from seminar where seq=#{seq}
+	</delete>	
+
+</mapper>
