@@ -14,6 +14,6 @@
 	
 	<body> 
 		<c:redirect url = "main.com"></c:redirect>
-	</body>
+	</body> 
 
 </html>
