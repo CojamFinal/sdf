@@ -11,6 +11,7 @@
   		
   		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
   		
 		<title></title>
@@ -70,7 +71,7 @@
 	
 	<body>
 
-		<script src="http://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="http://developers.kakao.com/sdk/js/kakao.min.js"></script>
  
 <div id="kakao_btn_changed">
 <a href="javascript:loginWithKakao()">
@@ -78,29 +79,14 @@
 </div>
  
  
- 
-<script type='text/javascript'>
-// 버튼 이미지 전환 
-/* $(document).ready(function(){
- 
-    $("#custom-login-btn, #custom-logout-btn").hover(
-    function(){
-        $("#custom-login-btn img").attr('src','https://temporarytattoos.com/pub/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/n/u/number-1-temporary-tattoo_5035.jpg');
-        $("#custom-logout-btn img").attr('src','https://vignette.wikia.nocookie.net/logopedia/images/3/39/2-23.jpg/revision/latest?cb=20170506171339');
-        
-    }, 
-    function(){
-        $("#custom-login-btn img").attr('src','https://www.andysemporium.co.uk/ekmps/shops/andy1/images/classic-designs-3-black-number-3-digit-pack-5-133612-p.jpg');
-        $("#custom-logout-btn img").attr('src','https://st2.depositphotos.com/1561359/12173/v/950/depositphotos_121739162-stock-illustration-3d-shiny-blue-number-4.jpg');
-        
-    });
- 
-}); */
- 
- 
+<script>
+var namelee=localStorage.getItem("key1");
+console.log(localStorage.getItem("key1"));
+console.log(namelee);
+//document.getElementById("test1").innerHTML=namelee;
+
 // 로그인 및 로그아웃 버튼 생성 처리
 var cookiedata = document.cookie;
- 
 if(cookiedata.indexOf('kakao_login=done') < 0){
     createLoginKakao();
 }else{
@@ -117,19 +103,9 @@ function setCookie( name , value , expired ){
  
 }
  
-/* 쿠키 삭제 다른방법
-function deleteCookie( name ){
-    
-    var date = new Date();
-     date.setHours(date.getHours() - 1);
-     var expried_set = "expries="+date.toGMTString();
-     document.cookie = name + "="  + "; path=/;" + expried_set + ";"
-}
-*/
- 
-// 
+
 function getCookie(name){
- 
+
     var nameofCookie = name + "=";
     var x = 0;
     while(x <= document.cookie.length){
@@ -147,7 +123,6 @@ function getCookie(name){
         return "";
 }
  
- 
 // 카카오 script key 입력
 Kakao.init('f97d93c0c9455c750f465c1049841311');
  
@@ -159,10 +134,23 @@ function loginWithKakao(){
         persistAccessToken: true,
         persistRefreshToken: true,
         success: function(authObj) {
-            setCookie("kakao_login","done",1); // 쿠키생성 (로그인)
-            //alert(cookiedata);
-            createLogoutKakao();
-            //window.location.href="../login.com";
+        	Kakao.API.request({
+        		url:'/v1/user/me',
+        		success: function(res){
+		            setCookie("kakao_login","done",1); // 쿠키생성 (로그인)
+		            console.log(JSON.stringify(res));
+		            createLogoutKakao();
+		            //window.location.href="../login.com";
+		            localStorage.setItem("key1", res.properties.nickname); 
+		            //localStorage.key1=res.properties.nickname;
+		            console.log(res.properties.nickname);
+		            console.log(localStorage.getItem("key1"));
+   
+        },
+        fail: function(error){
+        	alert(JSON.stringify(error));
+        }
+        });
         },
             fail: function(err) {
              alert(JSON.stringify(err));
@@ -171,18 +159,15 @@ function loginWithKakao(){
     });
 }
  
- 
 // 로그아웃 처리
 function logoutWithKakao(){
     Kakao.Auth.logout();
     alert('카카오 로그아웃 완료!');
     setCookie("kakao_login","",-1);  // 쿠키삭제 (로그아웃)
-    //deleteCookie( "kakao_login" ); 쿠키삭제 다른 방법
     createLoginKakao();
     //window.location.href="../login.com";
+    localStorage.removeItem("key1");
 }
- 
- 
  
 // 로그인 버튼생성
 function createLoginKakao(){
@@ -191,7 +176,6 @@ function createLoginKakao(){
                 "<a/>";
  document.getElementById('kakao_btn_changed').innerHTML  = login_btn;
 }
- 
  
 // 로그아웃 버튼생성
 function createLogoutKakao(){
@@ -202,18 +186,16 @@ function createLogoutKakao(){
  
 }
  
- 
-  //]]>
-  
- 
+// document.getElementById("test1").textContent=userNick;
+ $(function(){
+ document.getElementById("test1").innerText=localStorage.key1;
+ });
 </script>
-<script type="text/javascript">
-var test1=document.getElementById('test1');
-test1.textContent=res.id;
-</script>
+
 		<div id="test1">
-		로그인아이디
+		로그인을 하시오
 		</div>
+		
 		
 	</body>
 </html>
